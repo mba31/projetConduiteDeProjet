@@ -10,7 +10,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             height: 100vh;
             margin: 0;
             font-family: 'Bubblegum Sans', cursive;
@@ -22,13 +22,16 @@
             overflow: hidden;
             position: relative;
         }
-    
-        #menu {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 50px;
-        }
+	
+	#menu {
+	    display: flex;
+	    gap: 20px;
+	    position: absolute;
+	    top: 50%;
+	    left: 50%;
+	    transform: translate(-50%, -50%);
+	}
+
 
         .story-button {
             padding: 12px 25px;
@@ -39,7 +42,7 @@
             border-radius: 5px;
             cursor: pointer;
         }
-    
+	
         #dialogue-box {
             background: rgba(0, 0, 0, 0.7);
             padding: 15px;
@@ -47,10 +50,11 @@
             max-width: 90%;
             font-size: 1.4em;
             font-weight: bold;
+            margin-top: 10px;
             margin-bottom: 20px;
             border: 2px solid white;
         }
-    
+
         #story-image {
             width: 230px;
             height: 230px;
@@ -62,7 +66,7 @@
             background-color: white;
             margin-bottom: 20px;
         }
-    
+
         #controls {
             width: 100%;
             display: flex;
@@ -72,8 +76,8 @@
             left: 0;
             padding: 0 20px;
         }
-    
-        #prev-button, #next-button {
+	
+	#prev-button, #next-button {
             padding: 12px 25px;
             font-size: 1.2em;
             background-color: #3b82f6;
@@ -82,7 +86,7 @@
             border-radius: 5px;
             cursor: pointer;
         }
-    
+
         #next-button:disabled, #prev-button:disabled {
             background-color: #ccc;
             cursor: not-allowed;
@@ -107,31 +111,40 @@
 
     <script>
         const stories = {
-            "HanselEtGretel": [
-                { text: "Il était une fois un petit garçon nommé Hansel et sa sœur Gretel.", image: "images/neutre.jpg" },
-                { text: "Leur famille était très pauvre et vivait au bord d'une grande forêt.", image: "images/triste.jpg"},
-                { text: "Un jour, leurs parents décidèrent de les emmener dans la forêt...", image: "images/neutre.jpg" },
-                { text: "Perdus et affamés, ils découvrirent une maison faite de pain d'épices.", image: "images/heureux.jpg" }, 
-                { text: "Ils s'approchèrent de la maison et commencèrent à manger les murs en pain d'épices.", image: "images/joyeux.jpg" },
-                { text: "Soudain, une vieille femme sortit de la maison et les invita à entrer.", image: "images/méfiant.jpg" },
-                { text: "Mais en réalité, c'était une sorcière qui voulait les capturer !", image: "images/effrayé.jpg" }
+	    "HanselEtGretel": [
+            	{ text: "Il était une fois un petit garçon nommé Hansel et sa sœur Gretel.", image: "images/neutre.jpg", background: "images/les_freres.jpeg" },
+            	{ text: "Leur famille était très pauvre et vivait au bord d'une grande forêt.", image: "images/triste.jpg", background: "images/famille.jpeg"},
+            	{ text: "Un jour, leurs parents décidèrent de les emmener dans la forêt...", image: "images/neutre.jpg" },
+            	{ text: "Perdus et affamés, ils découvrirent une maison faite de pain d'épices.", image: "images/heureux.jpg" }, 
+            	{ text: "Ils s'approchèrent de la maison et commencèrent à manger les murs en pain d'épices.", image: "images/joyeux.jpg" },
+            	{ text: "Soudain, une vieille femme sortit de la maison et les invita à entrer.", image: "images/méfiant.jpg" },
+            	{ text: "Au début, elle semblait gentille et leur offrit de la nourriture.", image: "images/rassuré.jpg" },
+            	{ text: "Mais en réalité, c'était une sorcière qui voulait les capturer !", image: "images/effrayé.jpg" },
+            	{ text: "Elle enferma Hansel dans une cage pour le faire grossir et Gretel devait l’aider.", image: "images/triste.jpg" },
+            	{ text: "Gretel comprit le plan de la sorcière et chercha un moyen de s’échapper.", image: "images/determiné.jpg" },
+            	{ text: "Un jour, la sorcière demanda à Gretel de vérifier si le four était chaud.", image: "images/méfiant.jpg" },
+            	{ text: "Mais Gretel eut une idée : elle poussa la sorcière dans le four et referma la porte !", image: "images/courageux.jpg" },
+            	{ text: "Hansel et Gretel fouillèrent la maison et trouvèrent un trésor.", image: "images/emerveillé.jpg" },
+            	{ text: "Ils prirent le trésor et retrouvèrent le chemin de leur maison.", image: "images/soulagé.jpg" },
+            	{ text: "Leur père, très heureux de les revoir, pleura de joie.", image: "images/triste.jpg"},
+            	{ text: "Grâce au trésor, ils ne furent plus jamais pauvres et vécurent heureux.", image: "images/heureux.jpg"}
             ],
             "autreHistoire": [
                 { text: "Ceci est une autre histoire qui peut être ajoutée plus tard.", image: "images/autre.jpg" }
             ]
         };
-    
-        let currentStory = [];
+
+	let currentStory = [];
         let index = 0;
         
-        function selectStory(storyKey) {
+	function selectStory(storyKey) {
             currentStory = stories[storyKey];
             index = 0;
             document.getElementById("menu").style.display = "none";
             document.getElementById("story-container").style.display = "block";
             updateStory();
         }
-    
+
         function updateStory() {
             if (index >= 0 && index < currentStory.length) {
                 document.getElementById("story-text").innerText = currentStory[index].text;
@@ -157,3 +170,5 @@
     </script>
 </body>
 </html>
+
+	
