@@ -95,6 +95,10 @@
 </head>
 <body>
     
+    <div id="menu">
+        <button class="story-button" onclick="selectStory('HanselEtGretel')">Hansel et Gretel</button>
+        <button class="story-button" onclick="selectStory('autreHistoire')">Autre Histoire</button>
+    </div>
     <div id="story-container" style="display: none;">
         <div id="dialogue-box">
             <p id="story-text"></p>
@@ -104,6 +108,7 @@
             <button id="prev-button" onclick="prevPart()">← Précédent</button>
             <button id="next-button" onclick="nextPart()">Continuer →</button>
         </div>
+        <button onclick="returnToMenu()">Retour au menu</button>
     </div>
 
     <script>
@@ -164,6 +169,20 @@
                 updateStory();
             }
         }
+	function returnToMenu() {
+            localStorage.removeItem('selectedStory');
+            document.getElementById("story-container").style.display = "none";
+            document.getElementById("menu").style.display = "flex";
+        }
+
+        window.onload = function() {
+            const selectedStory = localStorage.getItem('selectedStory');
+            if (selectedStory && stories[selectedStory]) {
+                selectStory(selectedStory);
+            } else {
+                document.getElementById("menu").style.display = "flex";
+            }
+        };
     </script>
 </body>
 </html>
