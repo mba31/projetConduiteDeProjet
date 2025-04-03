@@ -40,17 +40,24 @@
     </style>
 </head>
 <body>
-    <div id="home-container">
-        <h1>Choisissez un conte</h1>
-        <button class="button" onclick="startStory('hansel_et_gretel')">Hansel et Gretel</button>
-        <button class="button" onclick="startStory('autre_conte')">Autre Conte</button>
+    <div id="container">
+        <h1>Bienvenue dans les Contes Interactifs</h1>
+        <p>Choisissez une histoire à écouter :</p>
+        
+        <button id="start-button">Hansel et Gretel</button>
+        <button id="other-story-button">Autre Histoire</button>
     </div>
 
     <script>
-        function startStory(storyName) {
-            localStorage.setItem('selectedStory', storyName);
-            window.location.href = 'story.html';  // Redirige vers la page du conte interactif
-        }
+        document.getElementById("start-button").addEventListener("click", function() {
+            localStorage.setItem("selectedStory", "hansel_et_gretel"); // Histoire par défaut
+            window.location.href = "story.html";
+        });
+
+        document.getElementById("other-story-button").addEventListener("click", function() {
+            localStorage.setItem("selectedStory", "autre_conte"); // Autre histoire
+            window.location.href = "story.html";
+        });
     </script>
 </body>
 </html>
