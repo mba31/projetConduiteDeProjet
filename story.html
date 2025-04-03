@@ -49,7 +49,6 @@
         }
         #next-button, #prev-button {
             position: absolute;
-            margin: 10px;
             padding: 12px 25px;
             font-size: 1.2em;
             background-color: #3b82f6;
@@ -59,12 +58,12 @@
             cursor: pointer;
         }
         #next-button {
-            bottom: 0;
-            right: 0;
+            bottom: 10px;
+            right: 10px;
         }
         #prev-button {
-            bottom: 0;
-            left: 0;
+            bottom: 10px;
+            left: 10px;
         }
         #next-button:disabled, #prev-button:disabled {
             background-color: #ccc;
@@ -77,7 +76,7 @@
         <p id="story-text"></p>
     </div>
     <img id="story-image" src="" alt="Illustration du conte">
-    <button id="prev-button" onclick="prevPart()">← Précédent</button>
+    <button id="prev-button">← Précédent</button>
     <button id="next-button">Continuer →</button>
 
     <script>
@@ -93,28 +92,29 @@
                 { text: "Peu après, une princesse naquit au château.", image: "images/princesse.jpg", background: "images/chateau_rose.jpg" }
             ]
         };
-        
-        let storyName = localStorage.getItem('selectedStory'); // Récupérer l'histoire choisie
-        let story = stories[storyName] || stories.hansel_et_gretel; // Si inconnu, charger Hansel par défaut
-        
+
+        // Vérifier et récupérer l'histoire choisie
+        let storyName = localStorage.getItem('selectedStory') || "hansel_et_gretel"; 
+        let story = stories[storyName]; 
+
         let index = 0;
         const textContainer = document.getElementById("story-text");
         const imageContainer = document.getElementById("story-image");
         const nextButton = document.getElementById("next-button");
         const prevButton = document.getElementById("prev-button");
-        
+
         function updateButtons() {
             prevButton.disabled = index <= 0;
             nextButton.disabled = index >= story.length - 1;
         }
-        
+
         function updateStoryPart() {
             const part = story[index];
             textContainer.innerText = part.text;
             imageContainer.src = part.image;
             document.body.style.backgroundImage = `url('${part.background}')`;
         }
-        
+
         function nextPart() {
             if (index < story.length - 1) {
                 index++;
@@ -122,7 +122,7 @@
             }
             updateButtons();
         }
-        
+
         function prevPart() {
             if (index > 0) {
                 index--;
@@ -130,10 +130,11 @@
             }
             updateButtons();
         }
-        
+
         nextButton.addEventListener("click", nextPart);
         prevButton.addEventListener("click", prevPart);
-        
+
+        // Initialisation
         updateButtons();
         updateStoryPart();
 
