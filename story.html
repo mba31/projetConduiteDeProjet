@@ -82,62 +82,61 @@
 
     <script>
         const stories = {
-    	    "HanselEtGretel": [
-                	{ text: "Il était une fois un petit garçon nommé Hansel et sa sœur Gretel.", image: "images/neutre.jpg", background: "images/les_freres.jpeg" },
-                	{ text: "Leur famille était très pauvre et vivait au bord d'une grande forêt.", image: "images/triste.jpg", background: "images/famille.jpeg"},
-                	{ text: "Un jour, leurs parents décidèrent de les emmener dans la forêt...", image: "images/neutre.jpg" },
-                	{ text: "Perdus et affamés, ils découvrirent une maison faite de pain d'épices.", image: "images/heureux.jpg" }, 
-                	{ text: "Ils s'approchèrent de la maison et commencèrent à manger les murs en pain d'épices.", image: "images/joyeux.jpg" },
-                	{ text: "Soudain, une vieille femme sortit de la maison et les invita à entrer.", image: "images/méfiant.jpg" },
-                	{ text: "Au début, elle semblait gentille et leur offrit de la nourriture.", image: "images/rassuré.jpg" },
-                	{ text: "Mais en réalité, c'était une sorcière qui voulait les capturer !", image: "images/effrayé.jpg" },
-                	{ text: "Elle enferma Hansel dans une cage pour le faire grossir et Gretel devait l’aider.", image: "images/triste.jpg" },
-                	{ text: "Gretel comprit le plan de la sorcière et chercha un moyen de s’échapper.", image: "images/determiné.jpg" },
-                	{ text: "Un jour, la sorcière demanda à Gretel de vérifier si le four était chaud.", image: "images/méfiant.jpg" },
-                	{ text: "Mais Gretel eut une idée : elle poussa la sorcière dans le four et referma la porte !", image: "images/courageux.jpg" },
-                	{ text: "Hansel et Gretel fouillèrent la maison et trouvèrent un trésor.", image: "images/emerveillé.jpg" },
-                	{ text: "Ils prirent le trésor et retrouvèrent le chemin de leur maison.", image: "images/soulagé.jpg" },
-                	{ text: "Leur père, très heureux de les revoir, pleura de joie.", image: "images/triste.jpg"},
-                	{ text: "Grâce au trésor, ils ne furent plus jamais pauvres et vécurent heureux.", image: "images/heureux.jpg"}
-                ],
-                "autreHistoire": [
-                    { text: "Ceci est une autre histoire qui peut être ajoutée plus tard.", image: "images/autre.jpg" }
-                ]
-            };
-
+            hansel_et_gretel: [
+                { text: "Il était une fois un petit garçon nommé Hansel et sa sœur Gretel.", image: "images/neutre.jpg", background: "images/image1.jpeg" },
+                { text: "Leur famille était très pauvre et vivait au bord d'une grande forêt.", image: "images/triste.jpg", background: "images/image2.jpeg" },
+                { text: "Un jour, leurs parents décidèrent de les emmener dans la forêt...", image: "images/neutre.jpg", background: "images/image3.jpeg" }
+            ],
+            autre_conte: [
+                { text: "Il était une fois un roi et une reine qui n'avaient pas d'enfant.", image: "images/roi.jpg", background: "images/chateau.jpg" },
+                { text: "Un jour, une fée leur donna une potion magique.", image: "images/fée.jpg", background: "images/foret_magique.jpg" },
+                { text: "Peu après, une princesse naquit au château.", image: "images/princesse.jpg", background: "images/chateau_rose.jpg" }
+            ]
+        };
+        
+        let storyName = localStorage.getItem('selectedStory'); // Récupérer l'histoire choisie
+        let story = stories[storyName] || stories.hansel_et_gretel; // Si inconnu, charger Hansel par défaut
+        
         let index = 0;
         const textContainer = document.getElementById("story-text");
         const imageContainer = document.getElementById("story-image");
         const nextButton = document.getElementById("next-button");
         const prevButton = document.getElementById("prev-button");
-
+        
         function updateButtons() {
-            prevButton.disabled = index <= 1;
-            nextButton.disabled = index >= storyHanselEtGretel.length;
+            prevButton.disabled = index <= 0;
+            nextButton.disabled = index >= story.length - 1;
         }
-
+        
+        function updateStoryPart() {
+            const part = story[index];
+            textContainer.innerText = part.text;
+            imageContainer.src = part.image;
+            document.body.style.backgroundImage = `url('${part.background}')`;
+        }
+        
         function nextPart() {
-            if (index < storyHanselEtGretel.length) {
-                const part = storyHanselEtGretel[index];
-                textContainer.innerText = part.text;
-                imageContainer.src = part.image;
-                document.body.style.backgroundImage = `url('${part.background}')`;
+            if (index < story.length - 1) {
                 index++;
+                updateStoryPart();
             }
             updateButtons();
         }
-
+        
         function prevPart() {
-            if (index > 1) { 
-                index -= 2;
-                nextPart();
+            if (index > 0) {
+                index--;
+                updateStoryPart();
             }
             updateButtons();
         }
-
+        
         nextButton.addEventListener("click", nextPart);
+        prevButton.addEventListener("click", prevPart);
+        
         updateButtons();
-        nextPart();
+        updateStoryPart();
+
     </script>
 </body>
 </html>
